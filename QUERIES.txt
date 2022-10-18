@@ -1,0 +1,67 @@
+1. Parte 1 - Respostas usando SQL
+Nessa primeira parte gostaríamos que você respondesse a três perguntas específicas utilizando
+a base disponível e SQL.
+
+
+I. Qual foi o número de ligações distintas e a média da duração das ligações por dia? A
+resposta deve ser dada em uma única query SQL.
+----------------------------------------------------------------------------------------
+
+
+SELECT
+  `athenas-364914.Athenas2.Ligacoes_dist`.team_id AS TIME,
+  COUNT(`athenas-364914.Athenas2.Ligacoes_dist`.line_id) AS QT_LIGACOES,
+  ROUND(AVG(`athenas-364914.Athenas2.Ligacoes_dist`.duration/60),2) AS MEDIA_TEMPO_HORAS
+FROM
+  `athenas-364914.Athenas2.Ligacoes_dist`
+GROUP BY
+  `athenas-364914.Athenas2.Ligacoes_dist`.team_id;
+
+
+II. Qual o percentual de ligações de cada atendente em relação ao seu time? A resposta
+deve ser dada em uma única query SQL.
+------------------------------------------------------------------------------------------
+
+
+SELECT
+  `athenas-364914.Athenas.Ligacoes_dist`.user_id AS ID_ATENDENTE,
+  `athenas-364914.Athenas.Ligacoes_dist`.team_id,
+  COUNT(`athenas-364914.Athenas.Ligacoes_dist`.attendance_id) AS QT_ATENDIMENTO,
+  COUNT(`athenas-364914.Athenas.Ligacoes_dist`.id)*100/(
+  SELECT
+    COUNT(`athenas-364914.Athenas.Ligacoes_dist`.attendance_id) 
+  FROM
+    `athenas-364914.Athenas.Ligacoes_dist`)AS PORCENTAGEM
+  FROM
+    `athenas-364914.Athenas.Ligacoes_dist`
+  GROUP BY
+    `athenas-364914.Athenas.Ligacoes_dist`.user_id,
+    `athenas-364914.Athenas.Ligacoes_dist`.team_id;
+
+
+
+
+
+III. Qual o ticket médio das vendas e das ligações, por mídia? A resposta deve ser dada em
+uma única query SQL. 
+
+-------------------------------------------------------------------------------------------
+
+SELECT
+  `athenas-364914.Athenas.Ligacoes_dist`.user_id AS ID_ATENDENTE,
+  `athenas-364914.Athenas.Ligacoes_dist`.team_id,
+  COUNT(`athenas-364914.Athenas.Ligacoes_dist`.attendance_id) AS QT_ATENDIMENTO,
+  COUNT(`athenas-364914.Athenas.Ligacoes_dist`.id)*100/(
+  SELECT
+    COUNT(`athenas-364914.Athenas.Ligacoes_dist`.attendance_id) 
+  FROM
+    `athenas-364914.Athenas.Ligacoes_dist`)AS PORCENTAGEM
+  FROM
+    `athenas-364914.Athenas.Ligacoes_dist`
+  GROUP BY
+    `athenas-364914.Athenas.Ligacoes_dist`.user_id,
+    `athenas-364914.Athenas.Ligacoes_dist`.team_id;
+
+
+
+
